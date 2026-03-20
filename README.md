@@ -19,6 +19,7 @@ A pesquisa analisou dados institucionais e socioeconômicos de estudantes ingres
 ## Stack Técnica
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)
+![Mojo](https://img.shields.io/badge/Mojo-🔥-orange)
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.x-orange?logo=scikit-learn)
 ![XGBoost](https://img.shields.io/badge/XGBoost-latest-red)
 ![SHAP](https://img.shields.io/badge/SHAP-Explicabilidade-lightgrey)
@@ -27,13 +28,31 @@ A pesquisa analisou dados institucionais e socioeconômicos de estudantes ingres
 
 | Categoria | Ferramentas |
 |---|---|
-| Linguagem | Python 3.11+ |
+| Linguagem principal | Python 3.11+ |
+| Aplicação de inferência | Mojo 🔥 |
 | Manipulação de dados | Pandas, NumPy |
 | Modelagem | Scikit-learn, XGBoost |
 | Explicabilidade | SHAP (TreeExplainer) |
 | Visualização | Matplotlib, Seaborn |
 | Serialização | Joblib |
 | Ambiente | Jupyter Notebook, Ubuntu 22.04 (WSL) |
+
+---
+
+## Estrutura do Repositório
+
+```
+Modelo-Evasao-Campus-Arinos/
+│
+├── Projeto TCC - Tiago Marques Lima (BSI).pdf   # Trabalho completo
+├── modelo.pdf                                    # Notebook de treinamento exportado
+│
+├── modelo_evasao.mojo    # Aplicação de inferência interativa em Mojo
+├── modelo_evasao.pkl     # Modelo Gradient Boosting serializado
+├── modelo_evasao         # Binário compilado Mojo
+│
+└── README.md
+```
 
 ---
 
@@ -45,7 +64,7 @@ A base original contém dados agregados por grupo de características (raça, re
 
 A variável-alvo é definida como:
 
-$$y_i = \begin{cases} 1 & \text{se } \text{Situação}_i = \text{Evadido} \\\ 0 & \text{caso contrário} \end{cases}$$
+$$y_i = \begin{cases} 1 & \text{se } \text{Situação}_i = \text{Evadido} \\ 0 & \text{caso contrário} \end{cases}$$
 
 ### 2. Features Utilizadas
 
@@ -64,7 +83,7 @@ Cinco algoritmos foram treinados e comparados via pipeline Scikit-learn com `tra
 | Modelo | Acurácia | Precisão | Recall | F1-Score |
 |---|---|---|---|---|
 | Logistic Regression | 0.70 | 0.75 | 0.75 | 0.75 |
-| Random Forest | 0.73 | 0.76 | 0.81 | **0.78** |
+| Random Forest | 0.73 | 0.76 | 0.81 | 0.78 |
 | **Gradient Boosting** | **0.75** | **0.80** | 0.78 | **0.79** |
 | XGBoost | 0.73 | 0.78 | 0.78 | 0.78 |
 | Decision Tree | 0.73 | 0.78 | 0.78 | 0.78 |
@@ -77,35 +96,69 @@ O **Gradient Boosting** foi selecionado por apresentar o melhor equilíbrio entr
 
 ## Principais Resultados da Análise Exploratória
 
-- A **fonte de financiamento** (Sem Programa Associado vs. Recursos Orçamentários) é o fator de maior importância no modelo, com peso de ~0.65 na impurity-based feature importance do Gradient Boosting.
-- A **renda familiar** é o segundo fator mais relevante, indicando que estudantes de menor renda apresentam maior risco de evasão.
-- O **sexo masculino** aparece como terceiro fator em importância, alinhado com literatura nacional sobre evasão diferenciada por gênero.
+- A **fonte de financiamento** (Sem Programa Associado vs. Recursos Orçamentários) é o fator de maior importância no modelo, com peso de ~0.65 na feature importance do Gradient Boosting.
+- A **renda familiar** é o segundo fator mais relevante: estudantes de menor renda apresentam maior risco de evasão.
+- O **sexo masculino** aparece como terceiro fator em importância, alinhado com a literatura nacional sobre evasão diferenciada por gênero.
 - Variáveis de **classificação racial** apresentam baixo poder preditivo isolado, mas interagem significativamente com renda.
 - Aproximadamente **50% das evasões** ocorrem nos primeiros semestres, consistente com o modelo teórico de Tinto (1993).
 
 ---
 
-## Como Reproduzir
+## Aplicação de Inferência (`modelo_evasao.mojo`)
 
-**Pré-requisitos:**
+O repositório inclui uma aplicação de inferência interativa escrita em **Mojo**, que carrega o modelo serializado e realiza predições via linha de comando. A escolha de Mojo demonstra interoperabilidade com o ecossistema Python/Scikit-learn a partir de uma linguagem compilada de alto desempenho.
 
-```bash
-pip install -r requirements.txt
-```
-
-**Executar a análise exploratória:**
+### Execução
 
 ```bash
-jupyter notebook notebooks/01_analise_exploratoria.ipynb
+# Via interpretador
+mojo modelo_evasao.mojo
+
+# Via binário compilado
+./modelo_evasao
 ```
 
-**Treinar o modelo:**
+### Exemplo de interação
 
-```bash
-jupyter notebook notebooks/02_modelo_preditivo.ipynb
+```
+Classificação Racial: Parda
+Sexo: Masculino
+Fonte de Financiamento (Digite 0 para Sem Programa Associado e qualquer valor para Recursos Orçamentários): 0
+Renda Familiar (Numérica): 375
+Faixa Etária (Numérica): 21
+Probabilidade de evasão: 0.7312...
 ```
 
-**Usar o modelo serializado:**
+### Referência de valores de entrada
+
+**Classificação Racial** — valores aceitos pelo modelo:
+`Amarela`, `Branca`, `Indígena`, `Não Declarada`, `Parda`, `Preta`
+
+**Renda Familiar Numérica** — ponto médio de cada faixa de renda per capita (em R$):
+
+| Faixa de Renda per Capita | Valor de Entrada |
+|---|---|
+| Não declarada | 0 |
+| 0 < RFP ≤ 0,5 salário mínimo | 375 |
+| 0,5 < RFP ≤ 1 | 1125 |
+| 1 < RFP ≤ 1,5 | 1875 |
+| 1,5 < RFP ≤ 2,5 | 3000 |
+| 2,5 < RFP ≤ 3,5 | 4500 |
+| RFP > 3,5 | 5250 |
+
+**Faixa Etária Numérica** — ponto médio de cada faixa:
+
+| Faixa | Valor de Entrada |
+|---|---|
+| 15 a 19 anos | 17 |
+| 20 a 24 anos | 22 |
+| 25 a 29 anos | 27 |
+| 30 a 34 anos | 32 |
+| 35 a 39 anos | 37 |
+
+---
+
+## Como Usar o Modelo via Python
 
 ```python
 import joblib
@@ -118,7 +171,7 @@ novo_aluno = pd.DataFrame([{
     'Sexo': 'Masculino',
     'FonteFinanciamento': 'Sem Programa Associado',
     'RendaFamiliarNum': 375,
-    'FaixaEtariaNum': 21
+    'FaixaEtariaNum': 22
 }])
 
 probabilidade = modelo.predict_proba(novo_aluno)[0][1]
@@ -148,5 +201,5 @@ print(f"Probabilidade de evasão: {probabilidade:.2%}")
 ## Contato
 
 **Tiago Marques Lima**  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Tiago_Marques_Lima-blue?logo=linkedin)](https://www.linkedin.com/in/tiago-marques-lima)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Tiago_Marques_Lima-blue?logo=linkedin)](https://www.linkedin.com/in/tiago-marques-dados)
 [![GitHub](https://img.shields.io/badge/GitHub-Ogarit-black?logo=github)](https://github.com/Ogarit)
