@@ -10,8 +10,8 @@ fn main() raises:
     classificacaoRacial = py.input('Classificação Racial: ')
     sexo = py.input('Sexo: ')
     fonteFinanciamento = py.input('Fonte de Financiamento (Digite 0 para Sem Programa Associado e qualquer valor para Recursos Orçamentários): ')
-    rendaFamiliarNum = py.input('Renda Familiar (Numérica): ')
-    faixaEtariaNum = py.input('Faixa Etária (Numérica): ')
+    rendaFamiliarNum = py.float(py.input('Renda Familiar (Numérica): '))
+    faixaEtariaNum = py.float(py.input('Faixa Etária (Numérica): '))
 
     novosDados = pd.DataFrame({
         'ClassificacaoRacial': [classificacaoRacial],
