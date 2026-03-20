@@ -16,7 +16,7 @@ fn main() raises:
     novosDados = pd.DataFrame({
         'ClassificacaoRacial': [classificacaoRacial],
         'Sexo': [sexo],
-        'FonteFinanciamento': ['Sem Programa Associado' if fonteFinanciamento == 0 else 'Recursos Orçamentários'],
+        'FonteFinanciamento': ['Sem Programa Associado' if fonteFinanciamento == '0' else 'Recursos Orçamentários'],
         'RendaFamiliarNum': [rendaFamiliarNum],
         'FaixaEtariaNum': [faixaEtariaNum]
     })
