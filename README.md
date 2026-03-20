@@ -1,7 +1,7 @@
-# Modelo Preditivo de Evasão Acadêmica — IFNMG Campus Arinos
+# Modelo Preditivo de Evasão Acadêmica - IFNMG Campus Arinos
 
-> Trabalho de Conclusão de Curso — Bacharelado em Sistemas de Informação  
-> Instituto Federal do Norte de Minas Gerais (IFNMG) — Campus Arinos  
+> Trabalho de Conclusão de Curso - Bacharelado em Sistemas de Informação  
+> Instituto Federal do Norte de Minas Gerais (IFNMG) - Campus Arinos  
 > Autor: **Tiago Marques Lima** | Orientador: Prof. Danilo Silveira Martins
 
 ---
@@ -12,7 +12,7 @@ Este projeto investiga os fatores determinantes da evasão discente no curso de 
 
 A pesquisa analisou dados institucionais e socioeconômicos de estudantes ingressantes entre **2016 e 2023**, utilizando microdados do **INEP** e da **Plataforma Nilo Pecanha (PNP)**. O resultado é um pipeline de ML capaz de classificar estudantes como *Evadido* ou *Não Evadido* com base em variáveis acadêmicas e socioeconômicas.
 
-**Contexto do problema:** dos 35 alunos que ingressaram em 2019 no curso de BSI do campus, apenas 13 permaneceram matriculados — uma taxa de evasão local de **66,7%**, superior à média nacional de 59% (INEP, 2021).
+**Contexto do problema:** dos 35 alunos que ingressaram em 2019 no curso de BSI do campus, apenas 13 permaneceram matriculados - uma taxa de evasão local de **66,7%**, superior à média nacional de 59% (INEP, 2021).
 
 ---
 
@@ -131,10 +131,10 @@ Probabilidade de evasão: 0.7312...
 
 ### Referência de valores de entrada
 
-**Classificação Racial** — valores aceitos pelo modelo:
+**Classificação Racial** - valores aceitos pelo modelo:
 `Amarela`, `Branca`, `Indígena`, `Não Declarada`, `Parda`, `Preta`
 
-**Renda Familiar Numérica** — ponto médio de cada faixa de renda per capita (em R$):
+**Renda Familiar Numérica** - ponto médio de cada faixa de renda per capita (em R$):
 
 | Faixa de Renda per Capita | Valor de Entrada |
 |---|---|
@@ -146,7 +146,7 @@ Probabilidade de evasão: 0.7312...
 | 2,5 < RFP ≤ 3,5 | 4500 |
 | RFP > 3,5 | 5250 |
 
-**Faixa Etária Numérica** — ponto médio de cada faixa:
+**Faixa Etária Numérica** - ponto médio de cada faixa:
 
 | Faixa | Valor de Entrada |
 |---|---|
@@ -194,7 +194,7 @@ print(f"Probabilidade de evasão: {probabilidade:.2%}")
 - INEP. *Censo da Educação Superior*, 2021 e 2024.
 - TINTO, V. *Dropout from higher education: A theoretical synthesis of recent research*. Review of Educational Research, 1975.
 - TINTO, V. *Leaving College: Rethinking the Causes and Cures of Student Attrition*. 2. ed. University of Chicago Press, 1993.
-- Plataforma Nilo Pecanha (PNP) — Ministério da Educação.
+- Plataforma Nilo Pecanha (PNP) - Ministério da Educação.
 
 ---
 
