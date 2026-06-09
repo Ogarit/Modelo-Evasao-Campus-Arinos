@@ -4,7 +4,7 @@
 > Instituto Federal do Norte de Minas Gerais (IFNMG) - Campus Arinos  
 > Autor: **Tiago Marques Lima** | Orientador: Prof. Danilo Silveira Martins
 >
-> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16420216.svg)](https://doi.org/10.5281/zenodo.16420216)
+> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20612100.svg)](https://doi.org/10.5281/zenodo.20612100)
 ---
 
 ## Visão Geral
